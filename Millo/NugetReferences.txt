@@ -1,0 +1,19 @@
+list of Nuget package manager to add:
+
+Microsoft.AspNet.WebApi
+Microsoft.AspNet.WebApi.Client
+Microsoft.AspNet.WebApi.Core
+Microsoft.AspNet.WebApi.WebHost
+Microsoft.AspNet.WebApi.WebHost
+Microsoft.CodeDom.Providers.DotNetComp
+Microsoft.IdentityModel.JsonWebTokens
+Microsoft.IdentityModel.Logging
+Microsoft.IdentityModel.Tokens
+Microsoft.Net.Compilers
+Microsoft.Web.Infrastructure
+Newtonsoft.Json
+Swashbuckle
+System.IdentityModel.Tokens.Jwt
+WebActivatorEx
+DeLoachAero.WebApi.RFC7807
+

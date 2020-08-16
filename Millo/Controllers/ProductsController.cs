@@ -48,7 +48,7 @@ namespace Millo.Controllers
             return "Product1";
         }
 
-        [HttpGet,Route("getProductsWithWidget/{values:enum(WebApiBoilerplate.Controllers.ProductsController+Names)}", Name ="GetProducts")]
+        [HttpGet,Route("getProductsWithWidget/{values:enum(Millo.Controllers.ProductsController+Names)}", Name ="GetProducts")]
         [ClientCacheControlFilter(ClientCacheControl.Public, 5)]
         // POST: api/Products
         public string GetProducts(Names values)

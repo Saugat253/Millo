@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Millo.Filters;
+using Millo.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Routing;
 
 namespace Millo.Controllers
 {
@@ -20,10 +23,12 @@ namespace Millo.Controllers
         {
             return "value";
         }
-
+        [Route("CreateUser")]
+        [ValidateModelState]
         // POST: api/User
-        public void Post([FromBody]string value)
+        public void Post([FromBody]User value)
         {
+
         }
 
         // PUT: api/User/5

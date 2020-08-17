@@ -113,6 +113,8 @@ namespace Millo.Models
 
     public partial class UserLogin
     {
+        [Key]
+        public int Id { get; set; }
         public string LoginProvider { get; set; }
         public string ProviderKey { get; set; }
         public string UserId { get; set; }

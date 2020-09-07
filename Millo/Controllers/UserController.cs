@@ -2,6 +2,7 @@
 using Millo.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,6 +13,12 @@ namespace Millo.Controllers
 {
     public class UserController : ApiController
     {
+        private MilloDbContext _dbContext { get; set; }
+        public UserController()
+        {
+            _dbContext = new MilloDbContext();
+        }
+        
         // GET: api/User
         public IEnumerable<string> Get()
         {
@@ -39,6 +46,13 @@ namespace Millo.Controllers
         // DELETE: api/User/5
         public void Delete(int id)
         {
+        }
+        [Route("Register")]
+        [ValidateModelState]
+        public void register(User user)
+        {
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChangesAsync();
         }
     }
 }

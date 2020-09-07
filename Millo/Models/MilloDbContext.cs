@@ -19,10 +19,10 @@ namespace Millo.Models
         //{
         //    throw new UnintentionalCodeFirstException();
         //}
-
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<UserClaim> UserClaims { get; set; }
-        public virtual DbSet<UserLogin> UserLogins { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        
+        public  DbSet<Role> Roles { get; set; }
+        public  DbSet<UserClaim> UserClaims { get; set; }
+        public  DbSet<UserLogin> UserLogins { get; set; }
+        public  DbSet<User> Users { get; set; }
     }
 }

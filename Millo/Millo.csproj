@@ -158,6 +158,10 @@
     <Compile Include="Migrations\202008171229234_custom.designer.cs">
       <DependentUpon>202008171229234_custom.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009071214106_RemovedRelationBetweenClasses.cs" />
+    <Compile Include="Migrations\202009071214106_RemovedRelationBetweenClasses.designer.cs">
+      <DependentUpon>202009071214106_RemovedRelationBetweenClasses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ComplexTypeDtos.cs" />
     <Compile Include="Models\MilloDbContext.cs" />
@@ -183,6 +187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008171229234_custom.resx">
       <DependentUpon>202008171229234_custom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009071214106_RemovedRelationBetweenClasses.resx">
+      <DependentUpon>202009071214106_RemovedRelationBetweenClasses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

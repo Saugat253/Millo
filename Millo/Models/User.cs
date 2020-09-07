@@ -11,14 +11,7 @@ namespace Millo.Models
     public class User 
     {
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
-        {
-            this.UserClaims = new HashSet<UserClaim>();
-            this.UserLogins = new HashSet<UserLogin>();
-            this.Roles = new HashSet<Role>();
-        }
-
+        
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
@@ -42,8 +35,7 @@ namespace Millo.Models
         
 
        
-        [Phone]
-        public int  Phone { get; set; }
+        
 
         public string City { get; set; }
         public string Country { get; set; }
@@ -53,12 +45,7 @@ namespace Millo.Models
         public bool IsActive { get; set; }
 
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserClaim> UserClaims { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserLogin> UserLogins { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Role> Roles { get; set; }
+       
 
     }
     public class ProfilePic 
@@ -89,7 +76,7 @@ namespace Millo.Models
         public string Id { get; set; }
         public string Name { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+       
         public virtual ICollection<User> Users { get; set; }
     }
 

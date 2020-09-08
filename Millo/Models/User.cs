@@ -15,7 +15,7 @@ namespace Millo.Models
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public string PrivateTokenPass { get; set; }
+        public string PrivateToken { get; set; }
         public string PublicToken { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -24,6 +24,7 @@ namespace Millo.Models
        
         public string Email { get; set; }
         public bool EmailConfirmed { get; set; }
+        public string PasswordSalt { get; set; }
         public string PasswordHash { get; set; }
         public string SecurityStamp { get; set; }
         public string PhoneNumber { get; set; }

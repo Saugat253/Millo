@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BLL\PasswordManager.cs" />
     <Compile Include="Constraints\EnumerationConstraint.cs" />
     <Compile Include="Controllers\CertificateController.cs" />
     <Compile Include="Controllers\ExceptionController.cs" />
@@ -162,6 +163,10 @@
     <Compile Include="Migrations\202009071214106_RemovedRelationBetweenClasses.designer.cs">
       <DependentUpon>202009071214106_RemovedRelationBetweenClasses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009081012263_addedPasswordSalt.cs" />
+    <Compile Include="Migrations\202009081012263_addedPasswordSalt.designer.cs">
+      <DependentUpon>202009081012263_addedPasswordSalt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ComplexTypeDtos.cs" />
     <Compile Include="Models\MilloDbContext.cs" />
@@ -190,6 +195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009071214106_RemovedRelationBetweenClasses.resx">
       <DependentUpon>202009071214106_RemovedRelationBetweenClasses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009081012263_addedPasswordSalt.resx">
+      <DependentUpon>202009081012263_addedPasswordSalt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

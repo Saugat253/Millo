@@ -1,4 +1,5 @@
-﻿using Millo.Filters;
+﻿using Millo.BLL;
+using Millo.Filters;
 using Millo.Models;
 using System;
 using System.Collections.Generic;
@@ -51,8 +52,21 @@ namespace Millo.Controllers
         [ValidateModelState]
         public void register(User user)
         {
+            PasswordManager passMgr = new PasswordManager();
+            passMgr.SecurePassword(user);
             _dbContext.Users.Add(user);
             _dbContext.SaveChangesAsync();
+            var x = GetPrivateAndPublicKey();
+        }
+        public Dictionary<string,string> GetPrivateAndPublicKey()
+        {
+            Dictionary<string, string> keys = new Dictionary<string, string>() ;
+            Random random = new Random();
+            string rando= random.Next().ToString();
+            keys.Add("private", rando);
+            keys.Add("public", random.NextDouble().ToString());
+            return keys;
+
         }
     }
 }

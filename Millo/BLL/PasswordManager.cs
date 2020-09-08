@@ -10,6 +10,8 @@ namespace Millo.BLL
 {
     public class PasswordManager
     {
+        MilloDbContext milloDb = new MilloDbContext();
+        private string _passwordHash { get; set; }
         public PasswordManager(string strPassword, int nSalt)
         {
             _password = strPassword;
@@ -35,6 +37,7 @@ namespace Millo.BLL
                 _salt = salt;
                 user.PasswordHash = ComputeSaltedHash();
                 user.PasswordSalt = _salt.ToString();
+                user.Password = "";
                 return user;
             }
             catch (Exception)
@@ -92,8 +95,30 @@ namespace Millo.BLL
             Byte[] computedHash = sha1.ComputeHash(toHash);
             string plaintext = Convert.ToBase64String(computedHash);
             //return encoder.GetString(plaintext);
+            _passwordHash = plaintext;
             return plaintext;
         }
+        public bool CheckPassword(User user)
+        {
+            bool isCorrect = false;
+            user =milloDb.Users.Where(x => x.UserId == user.UserId).FirstOrDefault();
+            return isCorrect;
+        }
+        public User MakeJwtTokenKeys(User user)
+        {
+            if (_passwordHash==null)
+            {
+                _passwordHash = user.PasswordHash;
+            }
+            _password = _passwordHash;
+            CreateRandomSalt();
+            user.PrivateToken = ComputeSaltedHash();
+            CreateRandomSalt();
+            _password = _passwordHash;
+            user.PublicToken = ComputeSaltedHash();
+            user.Password = "";
+            return user;
 
+        }
     }
 }

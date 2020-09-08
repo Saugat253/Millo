@@ -54,19 +54,20 @@ namespace Millo.Controllers
         {
             PasswordManager passMgr = new PasswordManager();
             passMgr.SecurePassword(user);
+            passMgr.MakeJwtTokenKeys(user);
             _dbContext.Users.Add(user);
             _dbContext.SaveChangesAsync();
-            var x = GetPrivateAndPublicKey();
+            //var x = GetPrivateAndPublicKey();
         }
-        public Dictionary<string,string> GetPrivateAndPublicKey()
-        {
-            Dictionary<string, string> keys = new Dictionary<string, string>() ;
-            Random random = new Random();
-            string rando= random.Next().ToString();
-            keys.Add("private", rando);
-            keys.Add("public", random.NextDouble().ToString());
-            return keys;
+        //public Dictionary<string,string> GetPrivateAndPublicKey()
+        //{
+        //    Dictionary<string, string> keys = new Dictionary<string, string>() ;
+        //    Random random = new Random();
+        //    string rando= random.Next().ToString();
+        //    keys.Add("private", rando);
+        //    keys.Add("public", random.NextDouble().ToString());
+        //    return keys;
 
-        }
+        //}
     }
 }

@@ -4,9 +4,11 @@ using Millo.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Routing;
 
@@ -55,6 +57,12 @@ namespace Millo.Controllers
             PasswordManager passMgr = new PasswordManager();
             passMgr.SecurePassword(user);
             passMgr.MakeJwtTokenKeys(user);
+            //var tokenHandler = new JwtSecurityTokenHandler();
+            //Claim claim = new Claim("userID",user.UserId);
+            //claim
+            //ClaimsIdentity claimsIdentity = new System.Security.Claims.ClaimsIdentity();
+            //claimsIdentity.AddClaim()
+            //tokenHandler.CreateJwtSecurityToken("millo", "", user, "", "", "", user.PublicToken);
             _dbContext.Users.Add(user);
             _dbContext.SaveChangesAsync();
             //var x = GetPrivateAndPublicKey();

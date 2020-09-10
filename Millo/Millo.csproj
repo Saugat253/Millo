@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BLL\JwtRsaTokenManager.cs" />
     <Compile Include="BLL\PasswordManager.cs" />
     <Compile Include="Constraints\EnumerationConstraint.cs" />
     <Compile Include="Controllers\CertificateController.cs" />

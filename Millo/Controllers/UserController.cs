@@ -54,9 +54,14 @@ namespace Millo.Controllers
         [ValidateModelState]
         public void register(User user)
         {
-            PasswordManager passMgr = new PasswordManager();
-            passMgr.SecurePassword(user);
-            passMgr.MakeJwtTokenKeys(user);
+            JwtRsaTokenManager jwtRsaTokenManager = new JwtRsaTokenManager( user);
+            jwtRsaTokenManager.InsertRsaKeys();
+
+            //PasswordManager passMgr = new PasswordManager();
+            //passMgr.SecurePassword(user);
+            //passMgr.MakeJwtTokenKeys(user);
+
+
             //var tokenHandler = new JwtSecurityTokenHandler();
             //Claim claim = new Claim("userID",user.UserId);
             //claim

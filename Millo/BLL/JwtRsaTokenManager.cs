@@ -258,8 +258,8 @@ namespace Millo.BLL
             var xs = new XmlSerializer(typeof(RSAParameters));
             xs.Serialize(sw, _publicKey);
             var x = Encoding.Unicode.GetBytes(sw.ToString());
-            var y = Convert.ToBase64String(x);
-            return sw.ToString();
+            var publicKey = Convert.ToBase64String(x);
+            return publicKey.ToString();
         }
         public string PrivateKeyString()
         {
@@ -267,8 +267,8 @@ namespace Millo.BLL
             var xs = new XmlSerializer(typeof(RSAParameters));
             xs.Serialize(sw, _privateKey);
             var x = Encoding.Unicode.GetBytes(sw.ToString());
-            var y = Convert.ToBase64String(x);
-            return sw.ToString();
+            var privateKey = Convert.ToBase64String(x);
+            return privateKey.ToString();
         }
         public string Encrypt(string plainText)
         {

@@ -51,7 +51,7 @@ namespace Millo.BLL
         {
                 
         }
-        public void encryptToken()
+        public JwtSecurityToken encryptToken()
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sec));
             var securityKey1 = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sec1));
@@ -81,19 +81,13 @@ namespace Millo.BLL
                 DateTime.Now,
                 signingCredentials,
                 ep);
-
-
             string tokenString = handler.WriteToken(jwtSecurityToken);
-            //Console.Writeline("this is the Created Token \n");
-            //Console.Writeline(tokenString + "\n");
-
             // Id someone tries to view the JWT without validating/decrypting the token,
             // then no claims are retrieved and the token is safe guarded.
             //Console.Writeline("Id someone tries to view the JWT without validating/decrypting the token");
             var jwt = new JwtSecurityToken(tokenString);
-            //Console.Writeline(jwt + "\n");
             Console.ReadLine();
-            decryptToken(tokenString);
+            return jwt;
         }
         public SecurityToken decryptToken(string token)
         {
@@ -126,14 +120,8 @@ namespace Millo.BLL
 
             SecurityToken validatedToken;
             var handler = new JwtSecurityTokenHandler();
-            //Console.Writeline(handler.CanReadToken(token));
             var isCorrect = handler.CanValidateToken;
-            //Console.Writeline(isCorrect);
             var x = handler.ValidateToken(tokenString, tokenValidationParameters, out validatedToken);
-            //Console.Writeline("\n the value of x is \n");
-            //Console.Writeline("Validated Token is \n");
-            //Console.Writeline(validatedToken);
-            //Console.ReadLine();
             return validatedToken;
         }
         public string createUncrackableToken()
@@ -169,9 +157,6 @@ namespace Millo.BLL
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
             var jwt = tokenHandler.WriteToken(token);
-            //Console.Writeline("Encrypted token \n" + jwt);
-            //Console.Writeline("Press Enter to decrypt token");
-            //Console.ReadLine();
             return jwt;
 
         }
@@ -207,18 +192,12 @@ namespace Millo.BLL
                 // This is the decryption key
                 TokenDecryptionKey = securityKey1
             };
-            ////Console.Writeline("Decrypted token \n");
 
             SecurityToken validatedToken;
             var handler = new JwtSecurityTokenHandler();
-            ////Console.Writeline(handler.CanReadToken(token));
             var isCorrect = handler.CanValidateToken;
-            ////Console.Writeline(isCorrect);
             var x = handler.ValidateToken(tokenString, tokenValidationParameters, out validatedToken);
-            ////Console.Writeline("\n the value of x is \n");
-            ////Console.Writeline("Validated Token is \n");
-            ////Console.Writeline(validatedToken);
-            //Console.ReadLine();
+            
             return validatedToken;
         }
 
@@ -240,7 +219,7 @@ namespace Millo.BLL
             privateKey = PrivateKey;
             payload = Payload;
         }
-        public void writeToken(string pvtkey = "this is private key to from which token is created")
+        public string writeToken(string pvtkey = "this is private key to from which token is created")
         {
             JwtTokenCreator jwtTokenCreator = new JwtTokenCreator();
             JsonWebTokenHandler jsonWebTokenHandler = new JsonWebTokenHandler();
@@ -258,6 +237,8 @@ namespace Millo.BLL
             };
             var jwtToken = new JwtSecurityToken("xyz", "abc", claims, DateTime.Now, DateTime.Now.AddDays(2000), credentials);
             //Console.Writeline(new JwtSecurityTokenHandler().WriteToken(jwtToken));
+            var jwt = new JwtSecurityTokenHandler().WriteToken(jwtToken);
+            return jwt;
         }
     }
     class RsaPrivateAndPublicKeyGenerator
@@ -276,17 +257,8 @@ namespace Millo.BLL
             var sw = new StringWriter();
             var xs = new XmlSerializer(typeof(RSAParameters));
             xs.Serialize(sw, _publicKey);
-
-
-            //Console.Writeline("------public key --------------------------------------------------------------------------------------- public key -------------");
             var x = Encoding.Unicode.GetBytes(sw.ToString());
-            //Console.Writeline(x.ToString());
-            //Console.Writeline("-----public key ----------------------------------------------------------------------------------------  public key -------------");
             var y = Convert.ToBase64String(x);
-            //Console.Writeline(y);
-            //Console.Writeline("----public key ----------------------------------------------------------------------------------------- public key -------------");
-
-
             return sw.ToString();
         }
         public string PrivateKeyString()
@@ -294,14 +266,8 @@ namespace Millo.BLL
             var sw = new StringWriter();
             var xs = new XmlSerializer(typeof(RSAParameters));
             xs.Serialize(sw, _privateKey);
-            //Console.Writeline("---Private key ------------------------------------------------------------------------Private key------------------");
             var x = Encoding.Unicode.GetBytes(sw.ToString());
-            //Console.Writeline(x.ToString());
-            //Console.Writeline("---Private key ------------------------------------------------------------------------Private key------------------");
             var y = Convert.ToBase64String(x);
-            //Console.Writeline(y);
-            //Console.Writeline("---Private key ------------------------------------------------------------------------Private key------------------");
-
             return sw.ToString();
         }
         public string Encrypt(string plainText)

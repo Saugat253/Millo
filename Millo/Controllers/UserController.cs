@@ -53,10 +53,13 @@ namespace Millo.Controllers
         }
         [Route("Register")]
         [ValidateModelState]
+        [AllowAnonymous]
         public async Task<string> register(User user)
         {
+            PasswordManager passwordManager = new PasswordManager();
+            user =await passwordManager.SecurePassword(user);
             JwtRsaTokenManager jwtRsaTokenManager = new JwtRsaTokenManager( user);
-            jwtRsaTokenManager.InsertRsaKeys();
+            user = jwtRsaTokenManager.InsertRsaKeys();
 
             //PasswordManager passMgr = new PasswordManager();
             //passMgr.SecurePassword(user);

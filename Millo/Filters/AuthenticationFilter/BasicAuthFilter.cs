@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Millo.BLL;
+using Millo.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -141,10 +144,17 @@ namespace Millo.Filters.AuthenticationFilter
             // TODO: your credential validation logic here, hopefully async!!
             // crack open the basic auth credentials
             var subject = ParseBasicAuthCredential(credentials);
+            PasswordManager passwordManager = new PasswordManager();
 
+            User user= await passwordManager.CheckPassword(subject.Item1, subject.Item2);
             // in your system you would probably do an async database lookup...
-            if (String.IsNullOrEmpty(subject.Item2) || subject.Item2 != "abc123")
+
+            //if (String.IsNullOrEmpty(subject.Item2) || subject.Item2 != "abc123")
+            //    return null;
+            if (user==null)
+            {
                 return null;
+            }
 
             // TODO: Create an IPrincipal (generic or custom), holding an IIdentity (generic or custom)
             //       Note a very useful IPrincipal/IIdentity is ClaimsPrincipal/ClaimsIdentity if 
@@ -152,10 +162,16 @@ namespace Millo.Filters.AuthenticationFilter
             //       about the subject. 
             IList<Claim> claimCollection = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, subject.Item1),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Role,user.Role),
+                new Claim(ClaimTypes.Email,user.Email),
+                new Claim(ClaimTypes.MobilePhone,user.PhoneNumber),
+                new Claim(ClaimTypes.StreetAddress,user.FullAddress),
                 // you can add other standard or custom claims here based on your username/password lookup...
                 new Claim(ClaimTypes.AuthenticationInstant, DateTime.UtcNow.ToString("o")),
-                new Claim("urn:MyCustomClaim", "my special value")
+                new Claim("FullName",user.FullAddress),
+                new Claim("Issuer", "Ashish Khatiwada"),
+                new Claim("Audience",user.UserName)
                 // etc.
             };
             // we'll include the specific token scheme as "authentication type" that was successful 

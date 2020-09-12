@@ -29,12 +29,32 @@ namespace Millo.BLL
         {
             RsaPrivateAndPublicKeyGenerator rsaPrivateAndPublicKeyGenerator = new RsaPrivateAndPublicKeyGenerator();
             _user.Password = "";
-            _user.PrivateToken =rsaPrivateAndPublicKeyGenerator.PrivateKeyString();
+            _user.PrivateToken = rsaPrivateAndPublicKeyGenerator.PrivateKeyString();
             _user.PublicToken = rsaPrivateAndPublicKeyGenerator.PublicKeyString();
             return _user;
         }
 
+        public string CreateToken(User user)
+        {
+            string token = string.Empty;
+            JwtTokenCreator jwtTokenCreator = new JwtTokenCreator();
+            string PrivateKey = user.PrivateToken;
+
+            var claims = new Claim[]
+           {
+               new Claim("Id",user.UserId.ToString()),
+                new Claim("UserName",user.UserName),
+                new Claim("Role",user.Role),
+                new Claim("FullName",user.FirstName + " "+user.LastName),
+                
+           };
+            jwtTokenCreator.writeToken(PrivateKey, claims,user.UserName);
+            return token;
+        }
     }
+
+
+
 
     class CreateSecureToken
     {
@@ -49,7 +69,7 @@ namespace Millo.BLL
         }
         public CreateSecureToken()
         {
-                
+
         }
         public JwtSecurityToken encryptToken()
         {
@@ -197,7 +217,7 @@ namespace Millo.BLL
             var handler = new JwtSecurityTokenHandler();
             var isCorrect = handler.CanValidateToken;
             var x = handler.ValidateToken(tokenString, tokenValidationParameters, out validatedToken);
-            
+
             return validatedToken;
         }
 
@@ -213,29 +233,21 @@ namespace Millo.BLL
         {
 
         }
-        public JwtTokenCreator(string PrivateKey,string PublicKey,string Payload)
+        public JwtTokenCreator(string PrivateKey, string PublicKey, Claim[] claims)
         {
             publicKey = PublicKey;
             privateKey = PrivateKey;
-            payload = Payload;
+
         }
-        public string writeToken(string pvtkey = "this is private key to from which token is created")
+        public string writeToken(string pvtkey, Claim[] claims,string username)
         {
             JwtTokenCreator jwtTokenCreator = new JwtTokenCreator();
             JsonWebTokenHandler jsonWebTokenHandler = new JsonWebTokenHandler();
-            if (pvtkey != "this is private key to from which token is created")
-            {
-                privateKey = pvtkey;
-            }
+            privateKey = pvtkey;
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(privateKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var claims = new Claim[]
-            {
-                new Claim("userName","ashish"),
-                new Claim("role","admin"),
-                new Claim("id","121212")
-            };
-            var jwtToken = new JwtSecurityToken("xyz", "abc", claims, DateTime.Now, DateTime.Now.AddDays(2000), credentials);
+
+            var jwtToken = new JwtSecurityToken("Millo",username, claims, DateTime.Now, DateTime.Now.AddDays(2000), credentials);
             //Console.Writeline(new JwtSecurityTokenHandler().WriteToken(jwtToken));
             var jwt = new JwtSecurityTokenHandler().WriteToken(jwtToken);
             return jwt;
@@ -288,5 +300,5 @@ namespace Millo.BLL
 
 
     }
-    
+
 }

@@ -21,7 +21,7 @@ namespace Millo.Models
         public string LastName { get; set; }
         public string FullAddress { get; set; }
 
-       
+        public string  Role { get; set; }
         public string Email { get; set; }
         public bool EmailConfirmed { get; set; }
         public string PasswordSalt { get; set; }

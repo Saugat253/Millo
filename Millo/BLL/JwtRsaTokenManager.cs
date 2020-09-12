@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Serialization;
 
@@ -34,7 +35,7 @@ namespace Millo.BLL
             return _user;
         }
 
-        public string CreateToken(User user)
+        public async Task<string> CreateToken(User user)
         {
             string token = string.Empty;
             JwtTokenCreator jwtTokenCreator = new JwtTokenCreator();
@@ -48,7 +49,9 @@ namespace Millo.BLL
                 new Claim("FullName",user.FirstName + " "+user.LastName),
                 
            };
-            jwtTokenCreator.writeToken(PrivateKey, claims,user.UserName);
+            await Task.Run(() =>
+            jwtTokenCreator.writeToken(PrivateKey, claims, user.UserName)
+            );
             return token;
         }
     }

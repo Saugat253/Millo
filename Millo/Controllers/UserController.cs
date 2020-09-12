@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Routing;
 
@@ -52,7 +53,7 @@ namespace Millo.Controllers
         }
         [Route("Register")]
         [ValidateModelState]
-        public void register(User user)
+        public async Task<string> register(User user)
         {
             JwtRsaTokenManager jwtRsaTokenManager = new JwtRsaTokenManager( user);
             jwtRsaTokenManager.InsertRsaKeys();
@@ -68,8 +69,11 @@ namespace Millo.Controllers
             //ClaimsIdentity claimsIdentity = new System.Security.Claims.ClaimsIdentity();
             //claimsIdentity.AddClaim()
             //tokenHandler.CreateJwtSecurityToken("millo", "", user, "", "", "", user.PublicToken);
-            _dbContext.Users.Add(user);
-            _dbContext.SaveChangesAsync();
+              _dbContext.Users.Add(user);
+            await _dbContext.SaveChangesAsync();
+            string token = await jwtRsaTokenManager.CreateToken(user);
+            
+            return token;
             //var x = GetPrivateAndPublicKey();
         }
         //public Dictionary<string,string> GetPrivateAndPublicKey()
